@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدرسة القيم بنين حلقة ثانية - بطاقة التقرير الشهري</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            text-align: right;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header and Logo */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 3px solid #004d40; /* Deep Green */
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        .header img {
+            max-width: 100px;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .header-text {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .header-text h1 {
+            color: #004d40;
+            font-size: 28px;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .header-text h2 {
+            color: #00796b;
+            font-size: 18px;
+            margin: 5px 0 0;
+            font-weight: 400;
+        }
+
+        /* Search Form */
+        .search-section {
+            background-color: #e0f2f1;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .search-section label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: #004d40;
+        }
+
+        .search-section input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #b2dfdb;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+            text-align: right;
+        }
+
+        .search-section button {
+            background-color: #00796b;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .search-section button:hover {
+            background-color: #004d40;
+        }
+
+        /* Report Card Display */
+        #report-card {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            display: none; /* Hidden by default */
+        }
+
+        .student-info {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f1f8e9;
+            border-radius: 5px;
+            border-right: 5px solid #8bc34a;
+        }
+
+        .student-info div {
+            width: 48%;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .student-info span {
+            font-weight: 700;
+            color: #333;
+        }
+
+        /* Grades Table */
+        .grades-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .grades-table th, .grades-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .grades-table th {
+            background-color: #004d40;
+            color: white;
+            font-weight: 700;
+        }
+
+        .grades-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .grades-table tr:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Behavior Section */
+        .behavior-section {
+            margin-top: 30px;
+            padding: 15px;
+            border: 1px solid #ff9800;
+            border-radius: 5px;
+            background-color: #fff3e0;
+        }
+
+        .behavior-section h3 {
+            color: #e65100;
+            margin-top: 0;
+            border-bottom: 2px solid #ff9800;
+            padding-bottom: 5px;
+        }
+
+        /* Print Button */
+        .print-button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .print-button-container button {
+            background-color: #d32f2f;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        .print-button-container button:hover {
+            background-color: #b71c1c;
+        }
+
+        /* Error Message */
+        #error-message {
+            color: #d32f2f;
+            background-color: #ffcdd2;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 700;
+            display: none;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: #fff;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+            }
+            .search-section, .print-button-container, #error-message {
+                display: none;
+            }
+            .header {
+                border-bottom: 2px solid #004d40;
+            }
+            #report-card {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="al_qeyam_logo.png" alt="شعار مدرسة القيم" id="school-logo">
+            <div class="header-text">
+                <h1>مدرسة القيم بنين حلقة ثانية</h1>
+                <h2>بطاقة التقرير الشهري لشهر أكتوبر 2025-2026</h2>
+            </div>
+        </div>
+
+        <div class="search-section">
+            <label for="student-id">رقم الطالب:</label>
+            <input type="text" id="student-id" placeholder="أدخل رقم الطالب">
+
+            <label for="national-id">رقم الهوية الوطنية (للتأكيد):</label>
+            <input type="text" id="national-id" placeholder="أدخل رقم الهوية الوطنية">
+
+            <button onclick="searchReport()">بحث عن التقرير</button>
+        </div>
+
+        <div id="error-message"></div>
+
+        <div id="report-card">
+            <div class="student-info">
+                <div>**اسم الطالب:** <span id="info-name"></span></div>
+                <div>**الصف:** <span id="info-class"></span></div>
+            </div>
+
+            <table class="grades-table">
+                <thead>
+                    <tr>
+                        <th>المادة</th>
+                        <th>الاختبارات التكوينية</th>
+                        <th>المستوى الأكاديمي</th>
+                        <th>المشاركة</th>
+                        <th>إنجاز المهام</th>
+                        <th>الحضور والكتب</th>
+                    </tr>
+                </thead>
+                <tbody id="grades-body">
+                    <!-- Grades will be inserted here -->
+                </tbody>
+            </table>
+
+            <div class="behavior-section">
+                <h3>التقييم السلوكي العام</h3>
+                <p id="info-behavior"></p>
+            </div>
+
+            <div class="print-button-container">
+                <button onclick="window.print()">طباعة البطاقة</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const DATA_FILE = 'report_data_new.json';
+        let reportData = {};
+
+        // Subject names mapping for display
+        const subjectNames = {
+            islamic_education: 'التربية الإسلامية',
+            arabic_language: 'اللغة العربية',
+            english_language: 'اللغة الإنجليزية',
+            social_studies: 'الدراسات الاجتماعية',
+            mathematics: 'الرياضيات',
+            science: 'العلوم',
+            physical_education: 'التربية البدنية',
+            arts: 'الفنون',
+            music: 'الموسيقى',
+            design_technology: 'التصميم والتكنولوجيا',
+            french_language: 'اللغة الفرنسية',
+            german_language: 'اللغة الألمانية'
+        };
+
+        // Load data from JSON file
+        async function loadData() {
+            try {
+                const response = await fetch(DATA_FILE);
+                if (!response.ok) {
+                    throw new Error(`Failed to load data: ${response.statusText}`);
+                }
+                reportData = await response.json();
+                console.log('Data loaded successfully.');
+            } catch (error) {
+                document.getElementById('error-message').innerText = 'خطأ في تحميل البيانات. يرجى التأكد من وجود ملف ' + DATA_FILE + ' في نفس المجلد.';
+                document.getElementById('error-message').style.display = 'block';
+                console.error(error);
+            }
+        }
+
+        // Search function
+        function searchReport() {
+            const studentId = document.getElementById('student-id').value.trim();
+            const nationalId = document.getElementById('national-id').value.trim();
+            const errorMessage = document.getElementById('error-message');
+            const reportCard = document.getElementById('report-card');
+
+            errorMessage.style.display = 'none';
+            reportCard.style.display = 'none';
+
+            if (!studentId || !nationalId) {
+                errorMessage.innerText = 'الرجاء إدخال رقم الطالب ورقم الهوية الوطنية.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            const searchKey = `${studentId}_${nationalId}`;
+            const studentReport = reportData[searchKey];
+
+            if (studentReport) {
+                displayReport(studentReport);
+            } else {
+                errorMessage.innerText = 'عذراً، لم يتم العثور على تقرير يطابق رقم الطالب ورقم الهوية الوطنية المدخلين.';
+                errorMessage.style.display = 'block';
+            }
+        }
+
+        // Display function
+        function displayReport(report) {
+            document.getElementById('info-name').innerText = report.student_name;
+            document.getElementById('info-class').innerText = report.class_name;
+            document.getElementById('info-behavior').innerText = report.general_behavior;
+
+            const gradesBody = document.getElementById('grades-body');
+            gradesBody.innerHTML = ''; // Clear previous data
+
+            for (const enSubject in report.grades) {
+                const arSubject = subjectNames[enSubject] || enSubject;
+                const grades = report.grades[enSubject];
+                
+                const row = gradesBody.insertRow();
+                row.insertCell().innerText = arSubject;
+                row.insertCell().innerText = grades.formative_exam || 'N/A';
+                row.insertCell().innerText = grades.academic_level || 'N/A';
+                row.insertCell().innerText = grades.participation || 'N/A';
+                row.insertCell().innerText = grades.doing_tasks || 'N/A';
+                row.insertCell().innerText = grades.attending_books || 'N/A';
+            }
+
+            document.getElementById('report-card').style.display = 'block';
+        }
+
+        // Initial data load
+        loadData();
+    </script>
+</body>
+</html>
