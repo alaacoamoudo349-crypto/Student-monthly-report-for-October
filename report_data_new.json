@@ -5004,10 +5004,10 @@
             },
             "english_language": {
                 "formative_exam": "غ",
-                "academic_level": "D",
-                "participation": "نشط جزئيًا  Partially",
-                "doing_tasks": "لا ينجز Incomplete",
-                "attending_books": "Partially interested  مهتم جزئيًّا"
+                "academic_level": "N/A",
+                "participation": "N/A",
+                "doing_tasks": "N/A",
+                "attending_books": "N/A"
             },
             "social_studies": {
                 "formative_exam": "غ",
@@ -5017,11 +5017,11 @@
                 "attending_books": "N/A"
             },
             "mathematics": {
-                "formative_exam": "14/20",
-                "academic_level": "A",
-                "participation": "نشط  Active",
-                "doing_tasks": "في الموعد  on time",
-                "attending_books": "interested  مهتم"
+                "formative_exam": "غ",
+                "academic_level": "N/A",
+                "participation": "N/A",
+                "doing_tasks": "N/A",
+                "attending_books": "N/A"
             },
             "physical_education": {
                 "formative_exam": "غ",
