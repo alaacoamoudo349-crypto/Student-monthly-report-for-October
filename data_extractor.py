@@ -9,7 +9,7 @@ import os
 
 # اسم ملف الإكسيل الذي سيتم معالجته.
 # تأكد من أن هذا الملف موجود في نفس المجلد الذي يحتوي على السكريبت.
-EXCEL_FILE_NAME = 'التقريرالشهري.xlsx' 
+EXCEL_FILE_NAME = 'التقريرالشهرى.xlsx' 
 
 # اسم ملف JSON الناتج.
 JSON_OUTPUT_FILE = 'report_data_corrected.json'
