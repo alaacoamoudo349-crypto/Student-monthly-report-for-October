@@ -14438,6 +14438,54 @@
                 "doing_tasks": "متأخرًا late",
                 "attending_books": "interested  مهتم"
             }
+             },
+    "2017000377 _784201359837313": {
+        "student_name": "خليفه احمد بلال حرموص المرر ",
+        "class_name": "G7-GEN-3L/4",
+        "general_behavior": "ملتزم",
+        "grades": {
+            "islamic_education": {
+                "formative_exam": "10 /20",
+                "academic_level": "C",
+                "participation": "نشط جزئيًا  Partially",
+                "doing_tasks": "Partially interested  مهتم جزئيًّا  ",
+                "attending_books": "interested  مهتم"
+            },
+            "arabic_language": {
+                "formative_exam": "12/20",
+                "academic_level": "D",
+                "participation": "غير نشط  Inactive ",
+                "doing_tasks": "في الموعد  on time ",
+                "attending_books": "interested  مهتم   "
+            },
+            "english_language": {
+                "formative_exam": "38/40",
+                "academic_level": "A",
+                "participation": "نشط  Active",
+                "doing_tasks": "في الموعد  on time ",
+                "attending_books": "interested  مهتم   "
+            },
+            "social_studies": {
+                "formative_exam": "18 /20",
+                "academic_level": "A",
+                "participation": "غير نشط  Inactive ",
+                "doing_tasks": "في الموعد  on time",
+                "attending_books": "interested  مهتم"
+            },
+            "mathematics": {
+                "formative_exam": "12/20",
+                "academic_level": "B",
+                "participation": "نشط جزئيًا  Partially",
+                "doing_tasks": "متأخرًا late",
+                "attending_books": "Partially interested  مهتم جزئيًّا  "
+            },
+            "science": {
+                "formative_exam": "8 /15",
+                "academic_level": "B",
+                "participation": "نشط  Active",
+                "doing_tasks": "متأخرًا late",
+                "attending_books": "interested  مهتم"
+            }
         }
     }
 }
