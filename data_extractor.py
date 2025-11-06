@@ -7,11 +7,12 @@ import os
 # الإعدادات: يجب تعديل هذه المتغيرات عند تغيير الملف
 # ==============================================================================
 
-# اسم ملف الإكسيل الذي سيتم معالجته. يجب أن يكون الملف في نفس مجلد هذا السكريبت.
+# اسم ملف الإكسيل الذي سيتم معالجته.
+# تأكد من أن هذا الملف موجود في نفس المجلد الذي يحتوي على السكريبت.
 EXCEL_FILE_NAME = 'التقريرالشهري.xlsx' 
 
-# اسم ملف JSON الناتج الذي سيتم استخدامه مع صفحة الويب الآمنة.
-JSON_OUTPUT_FILE = 'report_data_dual_key.json'
+# اسم ملف JSON الناتج.
+JSON_OUTPUT_FILE = 'report_data_corrected.json'
 
 # أسماء أوراق العمل (Sheets) التي تحتوي على بيانات الطلاب.
 SHEET_NAMES = ['GRADE 5', 'GRADE 6', 'GRADE 7', 'GRADE 8']
@@ -59,28 +60,32 @@ def extract_data_to_json(file_path):
     """
     all_students_data = {}
     
+    if not os.path.exists(file_path):
+        print(f"خطأ: لم يتم العثور على ملف الإكسيل بالاسم '{EXCEL_FILE_NAME}'.")
+        print("يرجى التأكد من تسمية الملف بشكل صحيح ووضعه في نفس المجلد.")
+        return
+
     print(f"بدء معالجة ملف الإكسيل: {file_path}")
 
     for sheet_name in SHEET_NAMES:
         try:
             print(f"  - معالجة ورقة العمل: {sheet_name}...")
             
-            # قراءة ورقة العمل، مع افتراض أن البيانات تبدأ من الصف الثالث (header=2)
-            df = pd.read_excel(file_path, sheet_name=sheet_name, header=2)
+            # قراءة ورقة العمل كبيانات خام (بدون رأس)
+            df = pd.read_excel(file_path, sheet_name=sheet_name, header=None)
             
-            # التأكد من وجود الأعمدة الأساسية
-            if len(df.columns) < GRADES_START_COL_IDX:
-                print(f"    [خطأ] عدد الأعمدة في ورقة {sheet_name} غير كافٍ. تم تخطي الورقة.")
-                continue
-
-            # تصفية الصفوف التي لا تحتوي على رقم طالب
-            df.dropna(subset=[df.columns[STUDENT_ID_COL_IDX]], inplace=True)
+            # تحديد الصف الذي تبدأ منه البيانات (الصف الرابع في الإكسيل، أي index 3 في pandas)
+            data_start_row = 3 
+            
+            # تصفية الصفوف التي لا تحتوي على رقم طالب أو رقم هوية وطنية
+            # نستخدم الأعمدة بناءً على index 0-based
+            df_data = df.iloc[data_start_row:].copy()
             
             # التكرار على صفوف البيانات (الطلاب)
-            for index, row in df.iterrows():
+            for index, row in df_data.iterrows():
                 try:
-                    student_id_raw = row[df.columns[STUDENT_ID_COL_IDX]]
-                    national_id_raw = row[df.columns[NATIONAL_ID_COL_IDX]]
+                    student_id_raw = row[STUDENT_ID_COL_IDX]
+                    national_id_raw = row[NATIONAL_ID_COL_IDX]
                     
                     # تنظيف رقم الطالب (تحويله إلى عدد صحيح ثم إلى نص)
                     student_id = str(int(student_id_raw)) if pd.notna(student_id_raw) and str(student_id_raw).replace('.', '', 1).isdigit() else None
@@ -98,9 +103,9 @@ def extract_data_to_json(file_path):
                     combined_key = f"{student_id}_{national_id}"
                         
                     student_data = {
-                        'student_name': str(row[df.columns[STUDENT_NAME_COL_IDX]]).strip(),
-                        'class_name': str(row[df.columns[CLASS_COL_IDX]]).strip(),
-                        'general_behavior': str(row[df.columns[BEHAVIOR_COL_IDX]]).strip(),
+                        'student_name': str(row[STUDENT_NAME_COL_IDX]).strip(),
+                        'class_name': str(row[CLASS_COL_IDX]).strip(),
+                        'general_behavior': str(row[BEHAVIOR_COL_IDX]).strip(),
                         'grades': {}
                     }
                     
@@ -117,7 +122,7 @@ def extract_data_to_json(file_path):
                         sub_column_keys = ['formative_exam', 'academic_level', 'participation', 'doing_tasks', 'attending_books']
                         
                         for i in range(SUB_COLUMNS_COUNT):
-                            value = str(row[df.columns[current_col_idx + i]]).strip() if pd.notna(row[df.columns[current_col_idx + i]]) else 'N/A'
+                            value = str(row[current_col_idx + i]).strip() if pd.notna(row[current_col_idx + i]) else 'N/A'
                             subject_grades[sub_column_keys[i]] = value
                         
                         # إضافة المادة فقط إذا كانت تحتوي على درجات فعلية
@@ -131,7 +136,7 @@ def extract_data_to_json(file_path):
                 
                 except Exception as e:
                     # طباعة خطأ في صف معين للمساعدة في التصحيح
-                    print(f"    [خطأ في الصف] حدث خطأ أثناء معالجة الصف رقم {index + 3} في ورقة {sheet_name}: {e}")
+                    print(f"    [خطأ في الصف] حدث خطأ أثناء معالجة الصف رقم {index + 1}: {e}")
                     continue
 
         except Exception as e:
@@ -149,10 +154,4 @@ def extract_data_to_json(file_path):
 
 # تنفيذ الدالة
 if __name__ == "__main__":
-    # التحقق من وجود ملف الإكسيل
-    if not os.path.exists(EXCEL_FILE_NAME):
-        print(f"!!! خطأ: لم يتم العثور على ملف الإكسيل باسم '{EXCEL_FILE_NAME}' في هذا المجلد.")
-        print("!!! يرجى التأكد من وضع ملف الإكسيل في نفس مجلد هذا السكريبت وتسميته بشكل صحيح.")
-    else:
-        extract_data_to_json(EXCEL_FILE_NAME)
-
+    extract_data_to_json(EXCEL_FILE_NAME)
